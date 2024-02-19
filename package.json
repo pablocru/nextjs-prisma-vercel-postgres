@@ -1,0 +1,11 @@
+{
+  "name": "nextjs-prisma-vercel-postgres",
+  "version": "1.0.0",
+  "description": "Fullstack App with Next.js, Prisma, and Vercel Postgres",
+  "main": "index.js",
+  "author": "Pablo Cru Delhom (pabcrudel)",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
