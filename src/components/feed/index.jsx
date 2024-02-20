@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './feed.module.css';
 import ReactMarkdown from 'react-markdown';
-import { getFeed } from '../../lib/prisma/post';
+import { getFeed } from '../../prisma/post';
 
 export async function Feed () {
   const feed = await getFeed();
