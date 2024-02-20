@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import prismaClient from '../../lib/prisma';
 import styles from './feed.module.css';
 import ReactMarkdown from 'react-markdown';
@@ -20,27 +21,29 @@ export async function Feed () {
           feed?.length
             ? feed.map(post =>
               <FeedPost key={post.id}
+                id={post.id}
                 title={post.title}
                 content={post.content}
                 authorName={post.author.name}
               />
             )
-            : <VoidFeed/>
+            : <VoidFeed />
         }
       </div>
     </article>
   );
 }
 
-function FeedPost ({ title, content, authorName }) {
+function FeedPost ({ id, title, content, authorName }) {
   return (
     <section className={styles.feedPost}>
-    <h3>{title}</h3>
-    <ReactMarkdown>
-      {content}
-    </ReactMarkdown>
-    <p>By {authorName}</p>
-  </section>
+      <h3>{title}</h3>
+      <ReactMarkdown>
+        {content}
+      </ReactMarkdown>
+      <p>By {authorName}</p>
+      <Link href={`/${id}`}>Take a look</Link>
+    </section>
   );
 }
 
