@@ -1,17 +1,10 @@
 import Link from 'next/link';
-import prismaClient from '../../lib/prisma';
 import styles from './feed.module.css';
 import ReactMarkdown from 'react-markdown';
+import { getFeed } from '../../lib/prisma/post';
 
 export async function Feed () {
-  const feed = await prismaClient?.post?.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true }
-      }
-    }
-  });
+  const feed = await getFeed();
 
   return (
     <article>
