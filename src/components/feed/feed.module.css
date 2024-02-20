@@ -1,0 +1,11 @@
+.feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1em;
+}
+
+.feedPost {
+  padding: .5em 1em;
+  background-color: #ccc;
+  border-radius: 5px;
+}
