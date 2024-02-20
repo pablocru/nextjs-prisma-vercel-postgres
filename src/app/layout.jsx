@@ -1,5 +1,5 @@
-import { plexSans, plexSerif } from '../fonts/ibm-plex';
-import '../style/main.css';
+import { plexSans, plexSerif } from '@/fonts/ibm-plex';
+import '@/styles/main.css';
 
 export const metadata = {
   title: 'Next.js + Prisma + Vercel Postgres',

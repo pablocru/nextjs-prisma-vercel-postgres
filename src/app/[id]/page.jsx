@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown';
-import { getPostByID, getValidIDs } from '../../prisma/post';
+import { getPostByID, getValidIDs } from '@/prisma/post';
 
 export const dynamicParams = false;
 
