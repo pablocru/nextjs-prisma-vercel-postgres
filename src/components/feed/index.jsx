@@ -1,5 +1,6 @@
 import prismaClient from '../../lib/prisma';
 import styles from './feed.module.css';
+import ReactMarkdown from 'react-markdown';
 
 export async function Feed () {
   const feed = await prismaClient?.post?.findMany({
@@ -35,7 +36,9 @@ function FeedPost ({ title, content, authorName }) {
   return (
     <section className={styles.feedPost}>
     <h3>{title}</h3>
-    <p>{content}</p>
+    <ReactMarkdown>
+      {content}
+    </ReactMarkdown>
     <p>By {authorName}</p>
   </section>
   );
