@@ -1,14 +1,10 @@
 import ReactMarkdown from 'react-markdown';
-import { getPostByID, getValidIDs } from '@/prisma/post';
-
-export const dynamicParams = false;
+import { getValidIDs, getPostByID } from '@/server-actions/post';
 
 export async function generateStaticParams () {
-  const posts = await getValidIDs();
+  const postsIDs = await getValidIDs();
 
-  return posts.map(post => ({
-    id: post.id
-  }));
+  return postsIDs.map(id => ({ id }));
 }
 
 export default async function Post ({ params }) {
@@ -20,7 +16,7 @@ export default async function Post ({ params }) {
       <ReactMarkdown>
         {post.content}
       </ReactMarkdown>
-      <p>By {post.author.name}</p>
+      <p>By {post.authorName}</p>
     </main>
   );
 }

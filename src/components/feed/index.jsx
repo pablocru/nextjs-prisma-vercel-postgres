@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './feed.module.css';
 import ReactMarkdown from 'react-markdown';
-import { getFeed } from '@/prisma/post';
+import { getFeed } from '@/server-actions/post';
 
 export async function Feed () {
   const feed = await getFeed();
@@ -17,7 +17,7 @@ export async function Feed () {
                 id={post.id}
                 title={post.title}
                 content={post.content}
-                authorName={post.author.name}
+                authorName={post.authorName}
               />
             )
             : <VoidFeed />

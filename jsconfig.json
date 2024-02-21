@@ -6,6 +6,7 @@
       "@/components/*": ["components/*"],
       "@/fonts/*": ["fonts/*"],
       "@/prisma/*": ["prisma/*"],
+      "@/server-actions/*": ["server-actions/*"],
       "@/styles/*": ["styles/*"],
     }
   }
