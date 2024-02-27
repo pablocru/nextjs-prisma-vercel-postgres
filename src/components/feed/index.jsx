@@ -1,18 +1,15 @@
 import Link from 'next/link';
 import styles from './feed.module.css';
 import ReactMarkdown from 'react-markdown';
-import { getFeed } from '@/server-actions/post';
 
-export async function Feed () {
-  const feed = await getFeed();
-
+export function Feed ({ posts }) {
   return (
     <article>
       <h2>Feed</h2>
       <div className={styles.feed}>
         {
-          feed?.length
-            ? feed.map(post =>
+          posts?.length
+            ? posts.map(post =>
               <FeedPost key={post.id}
                 id={post.id}
                 title={post.title}

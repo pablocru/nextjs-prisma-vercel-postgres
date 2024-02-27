@@ -1,6 +1,9 @@
 import { Feed } from '@/components/feed';
+import { getFeed } from '@/server-actions/post';
 
-export default function Page () {
+export default async function Page () {
+  const posts = await getFeed();
+
   return (
     <>
       <header>
@@ -9,7 +12,7 @@ export default function Page () {
       </header>
 
       <main>
-        <Feed/>
+        <Feed posts={posts}/>
       </main>
     </>
   );
