@@ -1,0 +1,35 @@
+name: Vercel CI/CD
+description: Build & Deploy to Vercel
+author: Pablo Cru Delhom (pabcrudel)
+
+inputs:
+  environment:
+    description: Which environment should be used
+    required: false
+    default: preview
+
+runs:
+  using: composite
+  steps:
+    - name: Pull Vercel Environment Information
+      shell: bash
+      run: |
+        vercel pull --yes\
+        --environment=${{ inputs.environment }}\
+        --token=${{secrets.VERCEL_TOKEN }}
+
+    - name: Initialize Prisma client
+      shell: bash
+      run: pnpm prisma generate
+
+    - name: Build & Deploy Project Artifacts to Vercel
+      shell: bash
+      run: |
+        # "production" must be specified
+        if [[ ${{ inputs.environment }} == 'production' ]]; then
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }};
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }};
+        else
+          vercel build --token=${{ secrets.VERCEL_TOKEN }};
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }};
+        fi
