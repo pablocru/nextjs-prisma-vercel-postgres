@@ -2,6 +2,10 @@ name: Vercel CI/CD
 description: Build & Deploy to Vercel
 author: Pablo Cru Delhom (pabcrudel)
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 inputs:
   environment:
     description: Which environment should be used
@@ -11,6 +15,26 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Checkout files
+      shell: bash
+      uses: actions/checkout@v4
+
+    - name: Install Node
+      shell: bash
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install pnpm
+      shell: bash
+      uses: pnpm/action-setup@v3
+      with:
+        version: 8
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+
     - name: Pull Vercel Environment Information
       shell: bash
       run: |
