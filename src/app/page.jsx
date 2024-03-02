@@ -1,7 +1,7 @@
 import { Feed } from '@/components/feed';
 import { getFeed } from '@/server-actions/post';
 
-export default async function Page () {
+export default async function Home () {
   const posts = await getFeed();
 
   return (

@@ -1,16 +1,16 @@
 import { expect, describe, afterEach, it } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import Page from '@/app/page';
+import Home from '@/app/page';
 
 describe('Home page', () => {
   afterEach(cleanup);
 
   it('should render', async () => {
-    render(await Page());
+    render(await Home());
   });
 
   it('should render a level 1 heading', async () => {
-    render(await Page());
+    render(await Home());
 
     expect(
       screen.getByRole(
