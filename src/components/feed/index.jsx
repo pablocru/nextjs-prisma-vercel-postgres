@@ -10,10 +10,10 @@ export function Feed ({ posts }) {
         {
           posts?.length
             ? posts.map(post =>
-              <FeedPost key={post.id}
-                id={post.id}
+              <FeedPost key={post.slug}
                 title={post.title}
-                content={post.content}
+                slug={post.slug}
+                summary={post.summary}
                 authorName={post.authorName}
               />
             )
@@ -24,15 +24,15 @@ export function Feed ({ posts }) {
   );
 }
 
-function FeedPost ({ id, title, content, authorName }) {
+function FeedPost ({ title, slug, summary, authorName }) {
   return (
     <section className={styles.feedPost}>
       <h3>{title}</h3>
       <ReactMarkdown>
-        {content}
+        {summary}
       </ReactMarkdown>
       <p>By {authorName}</p>
-      <Link href={`/${id}`}>Take a look</Link>
+      <Link href={`/${slug}`}>Take a look</Link>
     </section>
   );
 }
