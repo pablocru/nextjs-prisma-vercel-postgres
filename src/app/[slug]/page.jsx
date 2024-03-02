@@ -1,18 +1,17 @@
 import ReactMarkdown from 'react-markdown';
-import { getValidIDs, getPostByID } from '@/server-actions/post';
+import { getValidSlugs, getContentBySlug } from '@/server-actions/post';
 
 export async function generateStaticParams () {
-  const postsIDs = await getValidIDs();
+  const postsIDs = await getValidSlugs();
 
-  return postsIDs.map(id => ({ id }));
+  return postsIDs.map(slug => ({ slug }));
 }
 
 export default async function Post ({ params }) {
-  const post = await getPostByID(params.id);
+  const post = await getContentBySlug(params.slug);
 
   return (
     <main>
-      <h1>{post.title}</h1>
       <ReactMarkdown>
         {post.content}
       </ReactMarkdown>
