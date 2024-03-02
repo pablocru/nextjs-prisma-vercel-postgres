@@ -16,13 +16,11 @@ runs:
   using: composite
   steps:
     - name: Install Node
-      shell: bash
       uses: actions/setup-node@v4
       with:
         node-version: 20
 
     - name: Install pnpm
-      shell: bash
       uses: pnpm/action-setup@v3
       with:
         version: 8
