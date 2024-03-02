@@ -1,17 +1,13 @@
 'use server';
 
-import { fetchValidIDs, fetchPostByID, fetchFeed } from '@/prisma/post';
+import {
+  fetchValidIDs,
+  fetchValidSlugs,
+  fetchPostByID,
+  fetchFeed,
+  fetchContentBySlug
+} from '@/prisma/post';
 import { notFound } from 'next/navigation';
-
-/**
- * @typedef {Object} Post
- * @property {string} id Identifier of the post
- * @property {string} title Post title
- * @property {string} content Post body
- * @property {boolean} published If the post should be public or not
- * @property {string} authorId Identifier of the author
- * @property {string} authorName The name of the author
- */
 
 /**
  * Get zero or more valid Post IDs
@@ -27,12 +23,33 @@ export async function getValidIDs () {
 }
 
 /**
+ * Get zero or more valid Post Slugs
+ * @returns {Promise<string[]>}
+ */
+export async function getValidSlugs () {
+  const res = await fetchValidSlugs();
+
+  const validSlugs = [];
+  if (res.length) for (const post of res) validSlugs.push(post.slugs);
+
+  return validSlugs;
+}
+
+/**
+ * @typedef {Object} Post
+ * @property {string} title
+ * @property {string} content Post body
+ * @property {boolean} published If the post should be public or not
+ * @property {string} authorId Identifier of the author
+ * @property {string} authorName The name of the author
+ */
+/**
  * Get a Post by it's ID. Will call `notFound()` if there isn't any one.
- * @param {string} _id
+ * @param {string} id
  * @returns {Promise<Post>}
  */
-export async function getPostByID (_id) {
-  const post = await fetchPostByID(_id);
+export async function getPostByID (id) {
+  const post = await fetchPostByID(id);
 
   if (!post) notFound();
 
@@ -42,8 +59,35 @@ export async function getPostByID (_id) {
 }
 
 /**
+ * @typedef {Object} PostContent
+ * @property {string} content Post body
+ * @property {string} authorName The name of the author
+ */
+/**
+ * Get a Post by it's ID. Will call `notFound()` if there isn't any one.
+ * @param {string} slug
+ * @returns {Promise<PostContent>}
+ */
+export async function getContentBySlug (slug) {
+  const post = await fetchContentBySlug(slug);
+
+  if (!post) notFound();
+
+  setAuthorName(post);
+
+  return post;
+}
+
+/**
+ * @typedef {Object} FeedPost
+ * @property {string} title
+ * @property {string} slug
+ * @property {string} summary
+ * @property {string} authorName
+ */
+/**
  * Get zero or more Posts
- * @returns {Promise<Post[]>}
+ * @returns {Promise<FeedPost[]>}
  */
 export async function getFeed () {
   const posts = await fetchFeed();
