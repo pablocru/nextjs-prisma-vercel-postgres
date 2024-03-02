@@ -18,3 +18,5 @@ jobs:
 
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel-ci-cd
+        with:
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
