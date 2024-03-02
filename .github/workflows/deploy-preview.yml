@@ -9,5 +9,8 @@ jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout files
+        uses: actions/checkout@v4
+
       - name: Build & Deploy to Vercel
         uses: ./.github/actions/vercel-ci-cd
