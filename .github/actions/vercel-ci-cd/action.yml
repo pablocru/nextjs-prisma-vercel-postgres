@@ -2,15 +2,14 @@ name: Vercel CI/CD
 description: Build & Deploy to Vercel
 author: Pablo Cru Delhom (pabcrudel)
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 inputs:
   environment:
     description: Which environment should be used
     required: false
     default: preview
+  vercel_token:
+    description: Secret token to communicate with Vercel
+    required: true
 
 runs:
   using: composite
@@ -34,7 +33,7 @@ runs:
       run: |
         vercel pull --yes\
         --environment=${{ inputs.environment }}\
-        --token=${{secrets.VERCEL_TOKEN }}
+        --token=${{ inputs.vercel_token }}
 
     - name: Initialize Prisma client
       shell: bash
@@ -45,9 +44,9 @@ runs:
       run: |
         # "production" must be specified
         if [[ ${{ inputs.environment }} == 'production' ]]; then
-          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }};
-          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }};
+          vercel build --prod --token=${{ inputs.vercel_token }};
+          vercel deploy --prebuilt --prod --token=${{ inputs.vercel_token }};
         else
-          vercel build --token=${{ secrets.VERCEL_TOKEN }};
-          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }};
+          vercel build --token=${{ inputs.vercel_token }};
+          vercel deploy --prebuilt --token=${{ inputs.vercel_token }};
         fi
